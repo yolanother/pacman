@@ -841,7 +841,7 @@ var PACMAN = (function() {
 	}
 
 	function pause() {
-		if(pauseFirstPress || state === PAUSE) {
+		if(pauseFirstPress || state !== PLAYING) {
 			if (state === PAUSE) {
 				audio.resume();
 				map.draw(ctx);
@@ -853,6 +853,7 @@ var PACMAN = (function() {
 				map.draw(ctx);
 				dialog("Paused\nSwipe down to Exit");
 			}
+			pauseFirstPress = false;
 		} else {
 			pauseFirstPress = true;
 		}
@@ -1158,7 +1159,7 @@ var PACMAN = (function() {
 				if (absDeltaX < 20 && absDeltaY < 20) {
 					if (state == WAITING) {
 						startNewGame();
-					} else if (state == PLAYING || state == PAUSE && shouldPause) {
+					} else if (state == PLAYING || state == PAUSE) {
 						pause();
 					}
 				} else if (absDeltaX > absDeltaY) {
